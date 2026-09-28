@@ -2,7 +2,482 @@
   "meta": {
     "brand": "AquaLinia",
     "title": "AquaLinia water filters — clean water at home",
-    "description": "Filter pitchers and under-sink water filters delivered across Russia. Find yours in 1 minute, warranty, 30-day returns."
+    "description": "Filter pitchers and under-sink water filters delivered across Russia. Find yours in 1 minute, warranty, 30-day returns, English-speaking support."
+  },
+  "nav": {
+    "catalog": "Filters",
+    "how": "How it works",
+    "compare": "Savings",
+    "reviews": "Reviews",
+    "faq": "FAQ",
+    "menu": "Open menu",
+    "close": "Close menu",
+    "callback": "Request a call",
+    "switchLabel": "Перейти на русский",
+    "switchTo": "RU",
+    "home": "Home"
+  },
+  "promo": {
+    "until": "until {date}",
+    "close": "Hide"
+  },
+  "hero": {
+    "rating": "{rating} · {families} families already drink clean water",
+    "titleStart": "Clean tap water —",
+    "titleAccent": "no bottles,",
+    "titleEnd": "no limescale",
+    "lead": "Filter pitchers and under-sink systems that remove chlorine, rust, hardness and bacteria from Russian tap water. We'll match a model to your water in 1 minute — with support in English.",
+    "ctaQuiz": "Find my filter in 1 minute",
+    "ctaCatalog": "Browse filters",
+    "trust1": "Up to 3-year warranty",
+    "trust2": "30-day returns",
+    "trust3": "Delivery across Russia",
+    "badge1Title": "−99%",
+    "badge1Text": "chlorine and impurities",
+    "badge2Title": "up to ₽50,000",
+    "badge2Text": "saved per year"
+  },
+  "problems": {
+    "eyebrow": "Why filter",
+    "title": "What can be in your tap water",
+    "subtitle": "City water is treated, but on its way to you it passes through old pipes. Here's what most often ends up in your glass.",
+    "sign": "How to spot it:",
+    "items": {
+      "chlorine": {
+        "title": "Chlorine",
+        "text": "Left over from disinfection. Dries your skin and spoils tea and coffee.",
+        "sign": "swimming-pool smell, bitter taste"
+      },
+      "rust": {
+        "title": "Rust and iron",
+        "text": "Comes from old pipes. Stains sinks, bathtubs and laundry.",
+        "sign": "orange stains, cloudy water"
+      },
+      "hardness": {
+        "title": "Hardness",
+        "text": "Calcium and magnesium salts. Ruin kettles, coffee machines and boilers.",
+        "sign": "limescale, white marks"
+      },
+      "metals": {
+        "title": "Heavy metals",
+        "text": "Lead, copper, cadmium. They build up in the body over the years.",
+        "sign": "invisible — lab test only"
+      },
+      "microplastics": {
+        "title": "Microplastics",
+        "text": "Particles thinner than a hair. Found even in bottled water.",
+        "sign": "invisible — lab test only"
+      },
+      "bacteria": {
+        "title": "Bacteria",
+        "text": "Multiply in pipes and tanks. Especially risky for children.",
+        "sign": "unpleasant smell, sometimes no signs"
+      }
+    },
+    "ctaText": "Not sure what's in your water? Answer 4 questions and we'll suggest a model.",
+    "cta": "Take the quiz"
+  },
+  "how": {
+    "eyebrow": "How it works",
+    "title": "Up to five filtration stages in one unit",
+    "subtitle": "Each stage has its own job. Water passes through them in turn and comes out of a separate faucet clean.",
+    "stages": [
+      {
+        "title": "Sediment filter",
+        "text": "Traps sand, rust and particles larger than 5 µm. Protects the next stages and extends their life."
+      },
+      {
+        "title": "Softening",
+        "text": "Ion-exchange resin swaps hardness salts for sodium. Less limescale in your kettle and coffee machine."
+      },
+      {
+        "title": "Activated carbon",
+        "text": "Coconut carbon removes chlorine, organics, pesticides and odours. Water tastes great."
+      },
+      {
+        "title": "0.1–0.01 µm membrane",
+        "text": "A hollow-fibre membrane retains bacteria and microplastics while keeping healthy minerals."
+      },
+      {
+        "title": "Remineralisation",
+        "text": "A final cartridge adds calcium and magnesium for pleasant, healthy water."
+      }
+    ],
+    "installTitle": "Install it yourself in 15–30 minutes",
+    "installText": "Everything you need is in the box, plus a video guide. No need to drill the countertop — the faucet fits the sink's opening.",
+    "pitcherTitle": "Renting or no space under the sink?",
+    "pitcherText": "A pitcher needs no installation: pour water in and it's clean in a couple of minutes."
+  },
+  "catalog": {
+    "eyebrow": "Catalogue",
+    "title": "Choose your filter",
+    "subtitle": "4 pitchers and 7 under-sink systems. Every model comes with a warranty and 30-day returns.",
+    "tabs": {
+      "flow": "Under-sink systems",
+      "pitcher": "Pitchers"
+    },
+    "chipsLabel": "Filter by problem",
+    "chips": {
+      "all": "All",
+      "hardness": "Hardness",
+      "rust": "Rust",
+      "chlorine": "Chlorine and odour",
+      "bacteria": "Bacteria",
+      "kids": "For kids"
+    },
+    "badges": {
+      "hit": "Bestseller",
+      "new": "New",
+      "best": "Customers' choice"
+    },
+    "reviews": "{count, plural, one {# review} other {# reviews}}",
+    "save": "Save {amount}",
+    "install": "{minutes}-min install",
+    "noInstall": "No installation",
+    "volume": "{volume} L jug",
+    "stages": "{count, plural, one {# stage} other {# stages}}",
+    "resource": "{liters} L resource",
+    "order": "Order",
+    "empty": "No models in this category match the filter.",
+    "reset": "Show all",
+    "installments": "or {parts} payments of {amount}",
+    "installmentsNote": "Pay in parts via our partners. Ask the manager for terms.",
+    "count": "{count, plural, one {# model} other {# models}}"
+  },
+  "compare": {
+    "eyebrow": "Comparison",
+    "title": "Filter vs bottled water vs boiling",
+    "subtitle": "Bottled water costs a family tens of thousands of roubles a year. Boiling removes neither chlorine nor metals.",
+    "cols": {
+      "feature": "Feature",
+      "filter": "AquaLinia filter",
+      "bottled": "Bottled water",
+      "boiling": "Boiling"
+    },
+    "rows": [
+      {
+        "label": "Price per litre",
+        "filter": "from ₽0.3",
+        "bottled": "≈ ₽25",
+        "boiling": "≈ ₽0.1 + time"
+      },
+      {
+        "label": "Chlorine and odour",
+        "filter": "yes",
+        "bottled": "yes",
+        "boiling": "partly"
+      },
+      {
+        "label": "Heavy metals",
+        "filter": "yes",
+        "bottled": "partly",
+        "boiling": "no"
+      },
+      {
+        "label": "Limescale",
+        "filter": "yes",
+        "bottled": "yes",
+        "boiling": "no"
+      },
+      {
+        "label": "Bacteria",
+        "filter": "yes",
+        "bottled": "yes",
+        "boiling": "yes"
+      },
+      {
+        "label": "Convenience",
+        "filter": "Always on tap",
+        "bottled": "Order and carry",
+        "boiling": "Wait for it to cool"
+      },
+      {
+        "label": "Plastic",
+        "filter": "None",
+        "bottled": "100+ bottles a year",
+        "boiling": "None"
+      }
+    ],
+    "yes": "Yes",
+    "no": "No",
+    "partly": "Partly",
+    "footnote": "Bacteria are retained by models with a membrane. Price per litre is based on cartridge cost."
+  },
+  "calc": {
+    "title": "Calculate your savings",
+    "subtitle": "We'll compare a filter with bottled water for your household.",
+    "people": "People in your household",
+    "peopleValue": "{count, plural, one {# person} other {# people}}",
+    "price": "Bottled water price",
+    "priceValue": "₽{price} per litre",
+    "product": "Filter model",
+    "bottled": "Bottled water per year",
+    "filterFirst": "Filter in the first year",
+    "savings": "You save per year",
+    "nextYears": "From year two — cartridges only: {amount} a year",
+    "bottles": "≈ {count} 19-litre bottles you won't have to order and carry",
+    "cta": "Order this model"
+  },
+  "steps": {
+    "eyebrow": "How to order",
+    "title": "Three steps to clean water",
+    "items": [
+      {
+        "title": "Leave a request",
+        "text": "Or take the quiz — it takes a minute."
+      },
+      {
+        "title": "Get advice",
+        "text": "A manager calls or messages you within 15 minutes during working hours — in English if you prefer — and places the order."
+      },
+      {
+        "title": "Install and enjoy",
+        "text": "Delivered in 1–5 days. A pitcher is ready at once; install an under-sink system yourself in 15–30 minutes."
+      }
+    ],
+    "cta": "Leave a request"
+  },
+  "quiz": {
+    "eyebrow": "1-minute match",
+    "title": "Not sure which filter you need?",
+    "subtitle": "Answer 4 questions — we'll show two suitable models and a manager will clarify the details.",
+    "benefits": [
+      "Two models for your water and budget",
+      "Free advice in English, no pressure",
+      "A gift with your order during the promotion"
+    ],
+    "step": "Question {current} of {total}",
+    "questions": {
+      "format": {
+        "title": "Which format suits you?",
+        "options": {
+          "pitcher": "Pitcher — no installation",
+          "flow": "Under-sink filter with its own faucet",
+          "unsure": "Not sure yet"
+        }
+      },
+      "problem": {
+        "title": "What bothers you most?",
+        "options": {
+          "hardness": "Limescale and hard water",
+          "rust": "Rust, cloudy water",
+          "chlorine": "Chlorine smell, bad taste",
+          "kids": "I need water for a child",
+          "unsure": "I want everything removed"
+        }
+      },
+      "people": {
+        "title": "How many people drink the water?",
+        "options": {
+          "1-2": "1–2 people",
+          "3-4": "3–4 people",
+          "5+": "5 or more"
+        }
+      },
+      "budget": {
+        "title": "What's your budget?",
+        "options": {
+          "low": "Under ₽2,000",
+          "mid": "₽2,000–8,000",
+          "high": "Over ₽8,000",
+          "any": "Doesn't matter — quality first"
+        }
+      }
+    },
+    "back": "Back",
+    "resultTitle": "These models suit you",
+    "resultText": "Leave your contacts — a manager will confirm the choice, answer questions and place the order.",
+    "restart": "Start over"
+  },
+  "guarantees": {
+    "eyebrow": "Guarantees",
+    "title": "Buy with peace of mind",
+    "items": [
+      {
+        "title": "Up to 3-year warranty",
+        "text": "On housings and faucets. We replace a faulty part free of charge."
+      },
+      {
+        "title": "30-day returns",
+        "text": "Not happy? Get your money back, even if the filter is already installed."
+      },
+      {
+        "title": "Certified",
+        "text": "EAEU declarations of conformity and expert reports for every model."
+      },
+      {
+        "title": "Delivery across Russia",
+        "text": "By courier, to pick-up points or by post. Next-day delivery in Moscow."
+      }
+    ]
+  },
+  "reviews": {
+    "eyebrow": "Reviews",
+    "title": "What customers say",
+    "stats": {
+      "rating": "Average rating",
+      "satisfied": "happy with their purchase",
+      "families": "families use our filters"
+    },
+    "bought": "Model: {product}",
+    "items": [
+      {
+        "name": "Mark",
+        "city": "Moscow",
+        "sku": "F-QUARTET",
+        "text": "We stopped ordering water bottles and the kettle no longer scales up. The manager answered all my questions in English."
+      },
+      {
+        "name": "Priya",
+        "city": "Saint Petersburg",
+        "sku": "F-TRIO-BABY",
+        "text": "We needed safe water for our baby. Now we make formula straight from the filter tap. Installed it in about 25 minutes."
+      },
+      {
+        "name": "Lucas",
+        "city": "Kazan",
+        "sku": "P-LAGUNA",
+        "text": "I rent, so nothing can go under the sink. The big pitcher is perfect and the indicator tells me when to swap the cartridge."
+      },
+      {
+        "name": "Olga",
+        "city": "Moscow",
+        "sku": "F-TRIO-FE",
+        "text": "Our tap water was slightly orange. After the Trio Iron it's clear with no smell. I change the cartridge every six months."
+      },
+      {
+        "name": "Chen",
+        "city": "Novosibirsk",
+        "sku": "P-RODNIK",
+        "text": "The water here is very hard. With the Rodnik pitcher there's far less limescale and tea tastes better."
+      },
+      {
+        "name": "Ahmed",
+        "city": "Krasnodar",
+        "sku": "F-PRO5",
+        "text": "Went for the full system. Tastes like spring water — better than bottled."
+      }
+    ]
+  },
+  "faq": {
+    "eyebrow": "Questions and answers",
+    "title": "FAQ",
+    "items": [
+      {
+        "q": "Do you speak English?",
+        "a": "Yes. Choose Telegram or WhatsApp in the form and write in English — our managers reply in English. Calls in English are possible too."
+      },
+      {
+        "q": "How often do I change cartridges?",
+        "a": "Every 1–2 months for pitchers and every 6–12 months for under-sink systems, depending on the model and how much water you drink. We can remind you."
+      },
+      {
+        "q": "Can I install an under-sink filter myself?",
+        "a": "Yes. It takes 15–30 minutes: all fittings, the faucet and a video guide are included. If you get stuck, a manager will help over the phone or in a messenger."
+      },
+      {
+        "q": "Which filter is best for hard water?",
+        "a": "Pick a model with a softening stage: the Rodnik and Laguna pitchers or the Trio Soft and Quartet Comfort systems. The 1-minute quiz will narrow it down."
+      },
+      {
+        "q": "Is filtered water safe for children?",
+        "a": "Yes. For baby food we recommend membrane models — Trio Baby, Quartet Ultra or Pro 5 Mineral — which retain bacteria."
+      },
+      {
+        "q": "How do returns work?",
+        "a": "Within 30 days of purchase you can return the filter, even if it's installed. Contact us and we'll arrange the return and refund."
+      },
+      {
+        "q": "How do delivery and payment work?",
+        "a": "Next day in Moscow, 1–5 days across Russia by courier or to a pick-up point. Pay by card online, via SBP or on delivery. Prices are in roubles."
+      }
+    ]
+  },
+  "final": {
+    "title": "Still have questions?",
+    "text": "Leave a request — we'll get back to you within 15 minutes during working hours, help you choose and place the order. English-speaking support available.",
+    "or": "Or message us:",
+    "telegram": "Telegram",
+    "whatsapp": "WhatsApp"
+  },
+  "form": {
+    "name": "Your name",
+    "namePlaceholder": "Anna",
+    "phone": "Phone",
+    "phonePlaceholder": "+7 999 123-45-67 or +44 …",
+    "contactMethod": "How should we contact you",
+    "methods": {
+      "call": "Call",
+      "telegram": "Telegram",
+      "whatsapp": "WhatsApp"
+    },
+    "comment": "Comment",
+    "commentOptional": "optional",
+    "commentPlaceholder": "For example, a convenient time to call",
+    "quantity": "Quantity",
+    "decrease": "Decrease",
+    "increase": "Increase",
+    "consent": "I give my <consent>consent to personal data processing</consent> and accept the <privacy>privacy policy</privacy>",
+    "submit": "Send request",
+    "sending": "Sending…",
+    "successTitle": "Thank you, request received!",
+    "successText": "A manager will contact you within 15 minutes during working hours: daily 9:00–21:00 Moscow time.",
+    "successClose": "Got it",
+    "errorGeneric": "Couldn't send the request. Check your connection and try again, or call us.",
+    "errorRate": "Too many requests in a row. Try again in a few minutes or call us.",
+    "close": "Close",
+    "errors": {
+      "required": "Fill in this field",
+      "name_short": "The name is too short",
+      "too_long": "The text is too long",
+      "phone_invalid": "Check the number, e.g. +7 999 123-45-67 or +44 20 7946 0958",
+      "consent_required": "We need your consent to contact you",
+      "product_required": "Choose a model",
+      "quiz_required": "Answer the quiz questions",
+      "invalid": "Check this value"
+    },
+    "titles": {
+      "header_callback": "Request a call",
+      "hero_quiz": "Find your filter in 1 minute",
+      "quiz": "Find your filter",
+      "product": "Place an order",
+      "steps_cta": "Leave a request",
+      "final": "Leave a request",
+      "exit_popup": "Wait! Get a free cartridge",
+      "sticky_bar": "Leave a request"
+    },
+    "subtitles": {
+      "header_callback": "We'll call you back within 15 minutes during working hours.",
+      "hero_quiz": "Answer 4 questions and we'll match a model to your water.",
+      "quiz": "",
+      "product": "A manager will confirm the order, stock and delivery time.",
+      "steps_cta": "We'll get in touch, help you choose and place the order.",
+      "final": "",
+      "exit_popup": "Leave your number — get a spare cartridge with any under-sink system.",
+      "sticky_bar": "We'll get back to you within 15 minutes during working hours."
+    }
+  },
+  "sticky": {
+    "call": "Call",
+    "cta": "Leave a request"
+  },
+  "footer": {
+    "about": "Drinking-water filters delivered across Russia. English-speaking support.",
+    "navTitle": "Sections",
+    "contactsTitle": "Contacts",
+    "legalTitle": "Seller",
+    "inn": "INN",
+    "ogrn": "OGRN",
+    "privacy": "Privacy policy",
+    "consent": "Consent to data processing",
+    "offer": "The information on this site is not a public offer. Please check prices and availability with a manager.",
+    "rights": "All rights reserved."
+  },
+  "legal": {
+    "privacyTitle": "Privacy policy",
+    "consentTitle": "Consent to personal data processing",
+    "updated": "Version of {date}",
+    "back": "Back to home"
   },
   "notFound": {
     "title": "Page not found",

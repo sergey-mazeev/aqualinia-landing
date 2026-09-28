@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { locale as localeParam } from "next/root-params";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations } from "next-intl/server";
+import { LeadModalProvider } from "@/components/lead/LeadModalProvider";
 import { routing } from "@/i18n/routing";
 import { alternatesFor, getSiteUrl } from "@/lib/site-url";
 import "../../globals.css";
@@ -49,7 +50,9 @@ export default async function SiteLayout({ children }: LayoutProps<"/[locale]">)
   return (
     <html lang={locale} className={onest.variable}>
       <body>
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <NextIntlClientProvider>
+          <LeadModalProvider>{children}</LeadModalProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

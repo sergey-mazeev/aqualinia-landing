@@ -40,8 +40,9 @@ s=$(post 8 "$(lead '"source":"quiz","quizAnswers":{"format":"pitcher","problem":
 dup="$(lead)"
 s=$(post 9 "$dup"); check "idempotent #1" 201 "$s"
 s=$(post 10 "$dup"); check "idempotent #2" 200 "$s"
-for i in 1 2 3 4 5; do post 11 "$(lead)" > /dev/null; done
-s=$(post 11 "$(lead)"); check "rate limit" 429 "$s" rate_limited
+# Keep posting from one IP until the limiter kicks in (limit is 5 by default, LEAD_RATE_LIMIT overrides).
+s=000; for i in $(seq 1 "${MAX_RATE_TRIES:-60}"); do s=$(post 11 "$(lead)"); [[ "$s" == 429 ]] && break; done
+check "rate limit" 429 "$s" rate_limited
 s=$(curl -s -o /tmp/smoke-body.$$ -w "%{http_code}" "$BASE_URL/api/health"); check "health" 200 "$s" '"ok":true'
 
 rm -f /tmp/smoke-body.$$

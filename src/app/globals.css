@@ -32,6 +32,26 @@
   }
 }
 
+@utility hero-wave {
+  animation: hero-wave 7s ease-in-out infinite alternate;
+}
+
+@utility hero-bubble {
+  animation: hero-bubble 4.5s ease-in infinite;
+  transform-box: fill-box;
+}
+
+@keyframes hero-wave {
+  from { transform: translate(0, 0); }
+  to { transform: translate(-80px, -40px); }
+}
+
+@keyframes hero-bubble {
+  0% { transform: translateY(0); opacity: 0; }
+  15% { opacity: 0.9; }
+  100% { transform: translateY(-190px); opacity: 0; }
+}
+
 @utility container-x {
   width: 100%;
   max-width: 1200px;

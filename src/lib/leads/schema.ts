@@ -22,6 +22,7 @@ export const contactSchema = z.object({
   name: z
     .string({ error: "required" })
     .trim()
+    .min(1, { error: "required" })
     .min(2, { error: "name_short" })
     .max(80, { error: "too_long" }),
   phone: z

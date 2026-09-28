@@ -18,7 +18,9 @@ export type LeadResult =
   | { status: 400; body: { ok: false; error: "validation"; fields: Record<string, ErrorCode> } }
   | { status: 400 | 403 | 413 | 429; body: { ok: false; error: string }; retryAfterSec?: number };
 
-const limiter = () => getRateLimiter("leads", { limit: 5, windowMs: 10 * 60_000 });
+/** Requests per IP per 10 minutes (override with LEAD_RATE_LIMIT, e.g. for local testing). */
+const limiter = () =>
+  getRateLimiter("leads", { limit: Number(process.env.LEAD_RATE_LIMIT) || 5, windowMs: 10 * 60_000 });
 
 function sameOrigin(headers: Headers): boolean {
   const origin = headers.get("origin");

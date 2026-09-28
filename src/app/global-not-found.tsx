@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -14,12 +15,12 @@ export default function GlobalNotFound() {
         <main className="flex min-h-dvh flex-col items-center justify-center gap-4 bg-pale px-4 text-center">
           <p className="text-7xl font-bold text-sky">404</p>
           <h1 className="text-2xl font-semibold">Страница не найдена · Page not found</h1>
-          <a
+          <Link
             href="/"
             className="rounded-full bg-blue px-6 py-3 font-semibold text-white hover:bg-blue-hover"
           >
             На главную · Home
-          </a>
+          </Link>
         </main>
       </body>
     </html>

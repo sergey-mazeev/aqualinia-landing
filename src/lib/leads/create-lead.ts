@@ -2,6 +2,7 @@ import "server-only";
 import { getProduct } from "@/data/products";
 import { site } from "@/data/site";
 import { buildSearchText, insertLead } from "@/lib/db/leads-repo";
+import { isSameOrigin } from "@/lib/origin";
 import { getRateLimiter } from "@/lib/rate-limit";
 import { hashIp } from "@/lib/hash";
 import { getClientIp } from "@/lib/request-ip";
@@ -22,22 +23,11 @@ export type LeadResult =
 const limiter = () =>
   getRateLimiter("leads", { limit: Number(process.env.LEAD_RATE_LIMIT) || 5, windowMs: 10 * 60_000 });
 
-function sameOrigin(headers: Headers): boolean {
-  const origin = headers.get("origin");
-  if (!origin) return true; // non-browser clients; browsers always send Origin on POST
-  const host = headers.get("x-forwarded-host") ?? headers.get("host");
-  try {
-    return new URL(origin).host === host;
-  } catch {
-    return false;
-  }
-}
-
 export async function handleLeadRequest(request: Request, now = Date.now()): Promise<LeadResult> {
   if (Number(request.headers.get("content-length") ?? 0) > MAX_BODY_BYTES) {
     return { status: 413, body: { ok: false, error: "too_large" } };
   }
-  if (!sameOrigin(request.headers)) return { status: 403, body: { ok: false, error: "forbidden" } };
+  if (!isSameOrigin(request.headers)) return { status: 403, body: { ok: false, error: "forbidden" } };
 
   const raw = await request.text();
   if (raw.length > MAX_BODY_BYTES) return { status: 413, body: { ok: false, error: "too_large" } };

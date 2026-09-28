@@ -11,6 +11,9 @@ export default async function proxy(request: NextRequest) {
   // Admin must be handled before next-intl, otherwise `/admin` is rewritten to `/ru/admin`.
   if (pathname === "/admin" || pathname.startsWith("/admin/")) {
     if (pathname === "/admin/login") return noindex(NextResponse.next());
+    // Server Actions check the session themselves (requireAdmin) and answer with a redirect
+    // the action client understands; an HTML redirect here would surface as a client error.
+    if (request.method === "POST" && request.headers.has("next-action")) return noindex(NextResponse.next());
 
     const ok = await verifySessionToken(request.cookies.get(SESSION_COOKIE)?.value);
     if (!ok) {

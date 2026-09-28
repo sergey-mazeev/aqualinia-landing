@@ -59,7 +59,7 @@ pnpm dev                     # http://localhost:3000, админка: /admin
 
 ## Деплой на Vercel
 
-Проект `aqualinia-landing` (регион функций `fra1`). База — Turso из маркетплейса Vercel: интеграция сама задаёт `TURSO_DATABASE_URL` и `TURSO_AUTH_TOKEN`, миграции применяются при сборке (`vercel.json` → `pnpm db:migrate && pnpm build`).
+Проект `aqualinia-landing` (регион функций и базы — `dub1`, Дублин). База — Turso из маркетплейса Vercel: интеграция сама задаёт `TURSO_DATABASE_URL` и `TURSO_AUTH_TOKEN`, миграции применяются при сборке (`vercel.json` → `pnpm db:migrate && pnpm build`).
 
 ```bash
 vercel link                        # привязать папку к проекту

@@ -1,0 +1,8 @@
+allowBuilds:
+  '@parcel/watcher': true
+  '@swc/core': true
+  # better-sqlite3 ships prebuilt N-API binaries; pnpm would otherwise run node-gyp because binding.gyp exists
+  better-sqlite3: false
+  esbuild: true
+  sharp: false
+  unrs-resolver: false

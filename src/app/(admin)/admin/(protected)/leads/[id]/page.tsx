@@ -22,7 +22,7 @@ function Row({ label, children }: { label: string; children: ReactNode }) {
 
 export default async function LeadPage({ params }: PageProps<"/admin/leads/[id]">) {
   const { id } = await params;
-  const lead = /^\d+$/.test(id) ? getLead(Number(id)) : undefined;
+  const lead = /^\d+$/.test(id) ? await getLead(Number(id)) : undefined;
   if (!lead) notFound();
 
   const digits = phoneDigits(lead.phone);

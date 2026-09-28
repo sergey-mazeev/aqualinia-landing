@@ -1,34 +1,48 @@
 import "server-only";
 import { mkdirSync } from "node:fs";
 import path from "node:path";
-import Database from "better-sqlite3";
-import { drizzle, type BetterSQLite3Database } from "drizzle-orm/better-sqlite3";
-import { migrate } from "drizzle-orm/better-sqlite3/migrator";
-import { getDbPath } from "@/lib/env";
+import { createClient } from "@libsql/client";
+import { drizzle, type LibSQLDatabase } from "drizzle-orm/libsql";
+import { migrate } from "drizzle-orm/libsql/migrator";
+import { getDatabaseConfig } from "@/lib/env";
 import * as schema from "./schema";
 
-export type Db = BetterSQLite3Database<typeof schema>;
+export type Db = LibSQLDatabase<typeof schema>;
 
-const cache = globalThis as typeof globalThis & { __leadsDb?: { db: Db; file: string } };
+type Connection = { url: string; db: Db; ready: Promise<void> };
+const cache = globalThis as typeof globalThis & { __leadsDb?: Connection };
 
 /**
- * Opens the database lazily (never at import time, so `next build` needs no DB),
- * applies pending migrations once and reuses the connection across hot reloads.
+ * Local SQLite file (`file:` URL, dev and Docker) or Turso (`libsql://`, Vercel).
+ * Opened lazily — never at import time, so `next build` needs no database —
+ * with pending migrations applied once per process.
  */
-export function getDb(): Db {
-  const file = getDbPath();
-  if (cache.__leadsDb?.file === file) return cache.__leadsDb.db;
+export async function getDb(): Promise<Db> {
+  const { url, authToken } = getDatabaseConfig();
 
-  if (file !== ":memory:") mkdirSync(path.dirname(path.resolve(file)), { recursive: true });
-  const sqlite = new Database(file);
-  sqlite.pragma("journal_mode = WAL");
-  sqlite.pragma("busy_timeout = 5000");
+  if (cache.__leadsDb?.url !== url) {
+    const isFile = url.startsWith("file:");
+    if (isFile) mkdirSync(path.dirname(path.resolve(url.slice("file:".length))), { recursive: true });
+    const client = createClient({ url, authToken });
+    const db = drizzle(client, { schema });
+    const ready = (async () => {
+      if (isFile) {
+        await client.execute("PRAGMA journal_mode = WAL");
+        await client.execute("PRAGMA busy_timeout = 5000");
+      }
+      await migrate(db, {
+        migrationsFolder: process.env.MIGRATIONS_DIR || path.join(process.cwd(), "drizzle"),
+      });
+    })();
+    cache.__leadsDb = { url, db, ready };
+  }
 
-  const db = drizzle(sqlite, { schema });
-  migrate(db, {
-    migrationsFolder: process.env.MIGRATIONS_DIR || path.join(process.cwd(), "drizzle"),
-  });
-
-  cache.__leadsDb = { db, file };
-  return db;
+  const connection = cache.__leadsDb!;
+  try {
+    await connection.ready;
+  } catch (error) {
+    cache.__leadsDb = undefined; // retry on the next request
+    throw error;
+  }
+  return connection.db;
 }

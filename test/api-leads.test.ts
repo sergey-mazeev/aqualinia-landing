@@ -46,7 +46,7 @@ describe("POST /api/leads", () => {
     const res = await POST(request(lead()));
     expect(res.status).toBe(201);
     const { id } = await res.json();
-    const row = getLead(id)!;
+    const row = (await getLead(id))!;
     expect(row.phone).toBe("+79991234567");
     expect(row.status).toBe("new");
     expect(row.utmSource).toBe("yandex");
@@ -75,7 +75,7 @@ describe("POST /api/leads", () => {
   it("stores a product order with quantity", async () => {
     const res = await POST(request(lead({ source: "product", productSku: "F-QUARTET", quantity: 2 })));
     expect(res.status).toBe(201);
-    const row = getLead((await res.json()).id)!;
+    const row = (await getLead((await res.json()).id))!;
     expect(row.productSku).toBe("F-QUARTET");
     expect(row.quantity).toBe(2);
   });
@@ -91,18 +91,18 @@ describe("POST /api/leads", () => {
       ),
     );
     expect(res.status).toBe(201);
-    const row = getLead((await res.json()).id)!;
+    const row = (await getLead((await res.json()).id))!;
     expect(row.recommendedSkus?.length).toBe(2);
     expect(row.recommendedSkus).not.toContain("P-KAPLYA");
   });
 
   it("silently drops honeypot and too-fast submissions", async () => {
-    const before = listLeads({}).total;
+    const before = (await listLeads({})).total;
     const honeypot = await POST(request(lead({ website: "http://spam" })));
     expect(honeypot.status).toBe(200);
     const fast = await POST(request(lead({ startedAt: Date.now() })));
     expect(fast.status).toBe(200);
-    expect(listLeads({}).total).toBe(before);
+    expect((await listLeads({})).total).toBe(before);
   });
 
   it("is idempotent per clientSubmissionId", async () => {
@@ -136,8 +136,8 @@ describe("POST /api/leads", () => {
 
   it("searches Cyrillic names case-insensitively and phones by digits", async () => {
     await POST(request(lead({ name: "Екатерина Смирнова", phone: "+7 916 555-44-33" })));
-    expect(listLeads({ q: "СМИРНОВА" }).total).toBe(1);
-    expect(listLeads({ q: "555 44" }).total).toBe(1);
-    expect(listLeads({ q: "100%" }).total).toBe(0);
+    expect((await listLeads({ q: "СМИРНОВА" })).total).toBe(1);
+    expect((await listLeads({ q: "555 44" })).total).toBe(1);
+    expect((await listLeads({ q: "100%" })).total).toBe(0);
   });
 });

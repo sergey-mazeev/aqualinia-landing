@@ -78,9 +78,9 @@ function whereFor(filters: LeadFilters): SQL | undefined {
   return and(...conditions);
 }
 
-export function insertLead(lead: Omit<NewLead, "id">): { id: number; duplicate: boolean } {
-  const db = getDb();
-  const inserted = db
+export async function insertLead(lead: Omit<NewLead, "id">): Promise<{ id: number; duplicate: boolean }> {
+  const db = await getDb();
+  const inserted = await db
     .insert(leads)
     .values(lead)
     .onConflictDoNothing({ target: leads.clientSubmissionId })
@@ -88,7 +88,7 @@ export function insertLead(lead: Omit<NewLead, "id">): { id: number; duplicate: 
     .get();
   if (inserted) return { id: inserted.id, duplicate: false };
 
-  const existing = db
+  const existing = await db
     .select({ id: leads.id })
     .from(leads)
     .where(eq(leads.clientSubmissionId, lead.clientSubmissionId))
@@ -96,13 +96,16 @@ export function insertLead(lead: Omit<NewLead, "id">): { id: number; duplicate: 
   return { id: existing!.id, duplicate: true };
 }
 
-export function listLeads(filters: LeadFilters, page = 1): { rows: Lead[]; total: number; pages: number } {
-  const db = getDb();
+export async function listLeads(
+  filters: LeadFilters,
+  page = 1,
+): Promise<{ rows: Lead[]; total: number; pages: number }> {
+  const db = await getDb();
   const where = whereFor(filters);
-  const total = db.select({ n: count() }).from(leads).where(where).get()?.n ?? 0;
+  const total = (await db.select({ n: count() }).from(leads).where(where).get())?.n ?? 0;
   const pages = Math.max(1, Math.ceil(total / PAGE_SIZE));
   const current = Math.min(Math.max(1, page), pages);
-  const rows = db
+  const rows = await db
     .select()
     .from(leads)
     .where(where)
@@ -114,8 +117,9 @@ export function listLeads(filters: LeadFilters, page = 1): { rows: Lead[]; total
 }
 
 /** All matching rows (for CSV export), newest first. */
-export function exportLeads(filters: LeadFilters, limit = 10_000): Lead[] {
-  return getDb()
+export async function exportLeads(filters: LeadFilters, limit = 10_000): Promise<Lead[]> {
+  const db = await getDb();
+  return db
     .select()
     .from(leads)
     .where(whereFor(filters))
@@ -124,28 +128,34 @@ export function exportLeads(filters: LeadFilters, limit = 10_000): Lead[] {
     .all();
 }
 
-export function getLead(id: number): Lead | undefined {
-  return getDb().select().from(leads).where(eq(leads.id, id)).get();
+export async function getLead(id: number): Promise<Lead | undefined> {
+  const db = await getDb();
+  return db.select().from(leads).where(eq(leads.id, id)).get();
 }
 
-export function leadCounters(): { total: number; fresh: number; today: number } {
-  const db = getDb();
-  const total = db.select({ n: count() }).from(leads).get()?.n ?? 0;
-  const fresh = db.select({ n: count() }).from(leads).where(eq(leads.status, "new")).get()?.n ?? 0;
-  const today =
+export async function leadCounters(): Promise<{ total: number; fresh: number; today: number }> {
+  const db = await getDb();
+  const [total, fresh, today] = await Promise.all([
+    db.select({ n: count() }).from(leads).get(),
+    db.select({ n: count() }).from(leads).where(eq(leads.status, "new")).get(),
     db
       .select({ n: count() })
       .from(leads)
       .where(gte(leads.createdAt, moscowTime(moscowToday())))
-      .get()?.n ?? 0;
-  return { total, fresh, today };
+      .get(),
+  ]);
+  return { total: total?.n ?? 0, fresh: fresh?.n ?? 0, today: today?.n ?? 0 };
 }
 
-export function updateLead(id: number, patch: { status?: LeadStatus; adminNote?: string | null }): boolean {
-  const result = getDb()
+export async function updateLead(
+  id: number,
+  patch: { status?: LeadStatus; adminNote?: string | null },
+): Promise<boolean> {
+  const db = await getDb();
+  const result = await db
     .update(leads)
     .set({ ...patch, updatedAt: new Date() })
     .where(eq(leads.id, id))
     .run();
-  return result.changes > 0;
+  return result.rowsAffected > 0;
 }

@@ -13,7 +13,7 @@ export async function GET(request: Request) {
 
   const url = new URL(request.url);
   const filters = parseLeadFilters(Object.fromEntries(url.searchParams));
-  const rows = exportLeads(filters);
+  const rows = await exportLeads(filters);
 
   const csv = toCsv([
     [

@@ -29,6 +29,8 @@ lead() { # $1 = extra json fields
 }
 
 echo "Smoke: $BASE_URL"
+# Wait up to 30 s for the server to come up (e.g. a freshly started container).
+for _ in $(seq 1 30); do curl -sf -o /dev/null "$BASE_URL/api/health" && break; sleep 1; done
 s=$(post 1 "$(lead)"); check "valid lead" 201 "$s" '"id"'
 s=$(post 2 "$(lead '"consent":false')"); check "no consent" 400 "$s" consent_required
 s=$(post 3 "$(lead '"phone":"12345"')"); check "bad phone" 400 "$s" phone_invalid

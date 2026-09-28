@@ -5,7 +5,7 @@ import { leadCounters } from "@/lib/db/leads-repo";
 
 export default async function ProtectedLayout({ children }: LayoutProps<"/admin">) {
   await requireAdmin();
-  const counters = leadCounters();
+  const counters = await leadCounters();
 
   return (
     <div className="min-h-dvh">

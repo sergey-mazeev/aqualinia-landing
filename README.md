@@ -8,7 +8,7 @@
 
 ## Стек
 
-Next.js 16 (App Router), next-intl 4, Tailwind CSS 4, react-hook-form + zod, Drizzle ORM + better-sqlite3, jose, Vitest. Node 24, pnpm 12.
+Next.js 16 (App Router), next-intl 4, Tailwind CSS 4, react-hook-form + zod, Drizzle ORM + libSQL (локально — файл SQLite, на Vercel — Turso), jose, Vitest. Node 24, pnpm 12.
 
 ## Быстрый старт
 
@@ -18,7 +18,7 @@ cp .env.example .env.local   # заполните ADMIN_PASSWORD, SESSION_SECRET
 pnpm dev                     # http://localhost:3000, админка: /admin
 ```
 
-База `./data/leads.db` создаётся и мигрируется автоматически при первой заявке.
+База `./data/leads.db` создаётся и мигрируется автоматически при первом обращении.
 
 ## Команды
 
@@ -32,7 +32,7 @@ pnpm dev                     # http://localhost:3000, админка: /admin
 | `pnpm smoke` | Смоук-тест API заявок против запущенного сервера (`BASE_URL=…`) |
 | `pnpm db:generate` | Новая миграция после изменения `src/lib/db/schema.ts` |
 | `pnpm db:migrate` | Применить миграции вручную |
-| `node scripts/backup.cjs` | Резервная копия базы (безопасно при WAL) |
+| `node scripts/backup.cjs` | Резервная копия локальной базы (безопасно при WAL) |
 
 ## Переменные окружения
 
@@ -43,7 +43,8 @@ pnpm dev                     # http://localhost:3000, админка: /admin
 | `SESSION_SECRET` | Секрет подписи сессий, не короче 32 символов (`openssl rand -hex 32`) |
 | `IP_HASH_SALT` | Соль для хеширования IP (сами IP не хранятся) |
 | `COOKIE_SECURE` | `true` за HTTPS; `false` только для локального http |
-| `DATABASE_PATH` | Путь к SQLite, по умолчанию `./data/leads.db` |
+| `DATABASE_PATH` | Путь к файлу SQLite (локально и в Docker), по умолчанию `./data/leads.db` |
+| `TURSO_DATABASE_URL`, `TURSO_AUTH_TOKEN` | Облачная база Turso (Vercel). Если заданы — используются вместо файла |
 | `LEAD_RATE_LIMIT` | Заявок с одного IP за 10 минут, по умолчанию 5 |
 
 ## Где что лежит
@@ -55,6 +56,18 @@ pnpm dev                     # http://localhost:3000, админка: /admin
 - `src/components/sections/*` — секции лендинга; `src/components/lead/*` — модалка, формы, квиз.
 - `src/app/api/leads/route.ts` → `src/lib/leads/create-lead.ts` — приём заявок (honeypot, проверка времени заполнения, rate-limit, валидация, нормализация телефона).
 - `src/app/(admin)/admin/*` — админка; `src/proxy.ts` — локализация и защита `/admin`.
+
+## Деплой на Vercel
+
+Проект `aqualinia-landing` (регион функций `fra1`). База — Turso из маркетплейса Vercel: интеграция сама задаёт `TURSO_DATABASE_URL` и `TURSO_AUTH_TOKEN`, миграции применяются при сборке (`vercel.json` → `pnpm db:migrate && pnpm build`).
+
+```bash
+vercel link                        # привязать папку к проекту
+vercel env ls                      # переменные: ADMIN_PASSWORD, SESSION_SECRET, IP_HASH_SALT, COOKIE_SECURE=true, SITE_URL
+vercel deploy --prod               # выложить
+```
+
+Сервера Vercel и Turso находятся вне РФ — для реальных персональных данных российских покупателей (152-ФЗ) используйте деплой на VPS в России (ниже).
 
 ## Деплой (Docker, VPS в РФ)
 
@@ -86,7 +99,7 @@ server {
 
 ### Резервная копия базы
 
-База работает в режиме WAL, поэтому копируйте её через SQLite, а не простым `cp`:
+Локальная база работает в режиме WAL, поэтому копируйте её скриптом (`VACUUM INTO`), а не простым `cp`. У Turso есть встроенное восстановление на момент времени.
 
 ```bash
 docker compose exec web node scripts/backup.cjs /app/data/backup.db

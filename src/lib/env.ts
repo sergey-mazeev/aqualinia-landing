@@ -15,6 +15,15 @@ export function assertSessionSecret(): void {
   if (value.length < 32) throw new Error("SESSION_SECRET must be at least 32 characters long");
 }
 
-export function getDbPath(): string {
-  return process.env.DATABASE_PATH || "./data/leads.db";
+/**
+ * Turso on Vercel (the marketplace integration sets TURSO_DATABASE_URL / TURSO_AUTH_TOKEN),
+ * otherwise a local SQLite file (DATABASE_PATH, default ./data/leads.db).
+ */
+export function getDatabaseConfig(): { url: string; authToken?: string } {
+  const url =
+    process.env.TURSO_DATABASE_URL ||
+    process.env.DATABASE_URL ||
+    `file:${process.env.DATABASE_PATH || "./data/leads.db"}`;
+  const authToken = process.env.TURSO_AUTH_TOKEN || process.env.DATABASE_AUTH_TOKEN || undefined;
+  return { url, authToken };
 }

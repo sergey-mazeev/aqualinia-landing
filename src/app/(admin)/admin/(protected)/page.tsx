@@ -25,7 +25,7 @@ export default async function LeadsPage({ searchParams }: PageProps<"/admin">) {
   const params = await searchParams;
   const filters = parseLeadFilters(params);
   const page = Math.max(1, Number(Array.isArray(params.page) ? params.page[0] : params.page) || 1);
-  const { rows, total, pages } = listLeads(filters, page);
+  const { rows, total, pages } = await listLeads(filters, page);
   const current = Math.min(page, pages);
   const hasFilters = Object.values(filters).some(Boolean);
 

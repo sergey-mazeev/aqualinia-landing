@@ -11,10 +11,11 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   output: "standalone",
   poweredByHeader: false,
-  serverExternalPackages: ["better-sqlite3"],
-  // better-sqlite3 picks its prebuilt binary at runtime, so tracing can't see it; ship the Linux ones.
+  serverExternalPackages: ["@libsql/client", "libsql"],
+  // Read from disk at runtime, so file tracing can't see them: SQL migrations and the
+  // native libsql binary for Linux (picked by platform at runtime).
   outputFileTracingIncludes: {
-    "/**/*": ["./node_modules/better-sqlite3/prebuilds/linux*.node"],
+    "/**/*": ["./drizzle/**/*", "./node_modules/.pnpm/@libsql+linux-*/**/*"],
   },
   experimental: {
     globalNotFound: true,

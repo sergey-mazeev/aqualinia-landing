@@ -70,7 +70,7 @@ export async function handleLeadRequest(request: Request, now = Date.now()): Pro
 
   const createdAt = new Date(now);
   const attribution = lead.attribution ?? {};
-  const { id, duplicate } = insertLead({
+  const { id, duplicate } = await insertLead({
     createdAt,
     updatedAt: createdAt,
     source: lead.source,

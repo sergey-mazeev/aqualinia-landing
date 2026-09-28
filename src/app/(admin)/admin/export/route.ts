@@ -2,13 +2,14 @@ import { NextResponse } from "next/server";
 import { isAdmin } from "@/lib/auth/require-admin";
 import { exportLeads, moscowToday, parseLeadFilters } from "@/lib/db/leads-repo";
 import { csvPhone, toCsv } from "@/lib/leads/csv";
+import { seeOther } from "@/lib/redirect";
 import { CONTACT_LABELS, SOURCE_LABELS, STATUS_LABELS } from "@/lib/leads/sources";
 import { formatMoscow, productName, quizLabels } from "../_components/format";
 
 export const dynamic = "force-dynamic";
 
 export async function GET(request: Request) {
-  if (!(await isAdmin())) return NextResponse.redirect(new URL("/admin/login", request.url), 303);
+  if (!(await isAdmin())) return seeOther("/admin/login");
 
   const url = new URL(request.url);
   const filters = parseLeadFilters(Object.fromEntries(url.searchParams));

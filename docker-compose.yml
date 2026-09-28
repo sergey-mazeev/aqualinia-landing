@@ -1,0 +1,16 @@
+services:
+  web:
+    build:
+      context: .
+      args:
+        SITE_URL: ${SITE_URL:-http://localhost:3000}
+    env_file: .env
+    ports:
+      # Published on localhost only: put nginx (TLS) in front of it.
+      - "127.0.0.1:3000:3000"
+    volumes:
+      - leads-data:/app/data
+    restart: unless-stopped
+
+volumes:
+  leads-data:

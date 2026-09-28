@@ -12,6 +12,10 @@ const nextConfig: NextConfig = {
   output: "standalone",
   poweredByHeader: false,
   serverExternalPackages: ["better-sqlite3"],
+  // better-sqlite3 picks its prebuilt binary at runtime, so tracing can't see it; ship the Linux ones.
+  outputFileTracingIncludes: {
+    "/**/*": ["./node_modules/better-sqlite3/prebuilds/linux*.node"],
+  },
   experimental: {
     globalNotFound: true,
   },
